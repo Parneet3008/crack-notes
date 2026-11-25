@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Crash Notes: exam prep from zero</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<style>
+:root{
+  --bg:#EAF0F6;--surface:#fff;--ink:#16233B;--muted:#55627A;--line:#CBD5E3;
+  --hl:#FFE066;--hl-bg:#FFF3B0;--hl-ink:#3B2F00;--btn:#16233B;--btn-ink:#fff;--err:#B3261E;
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#101826;--surface:#182235;--ink:#E6ECF5;--muted:#93A1B8;--line:#2A3750;
+    --hl:#FFD84D;--hl-bg:#3A3310;--hl-ink:#FFF0A8;--btn:#FFE066;--btn-ink:#1B1500;--err:#FF8A80;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101826;--surface:#182235;--ink:#E6ECF5;--muted:#93A1B8;--line:#2A3750;
+  --hl:#FFD84D;--hl-bg:#3A3310;--hl-ink:#FFF0A8;--btn:#FFE066;--btn-ink:#1B1500;--err:#FF8A80;
+  color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:17px/1.6 "Literata",Georgia,serif}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 64px}
+h1{font:700 clamp(2rem,5vw,3.2rem)/1.05 "Bricolage Grotesque",system-ui,sans-serif;margin:0 0 8px;letter-spacing:-.02em}
+h1 span{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 .12em}
+.lede{margin:0 0 28px;color:var(--muted);max-width:60ch}
+.grid{display:grid;gap:24px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.grid{grid-template-columns:360px minmax(0,1fr);align-items:start}.setup{position:sticky;top:20px}}
+.setup,.topic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+label{display:block;font:500 .95rem "Bricolage Grotesque",system-ui,sans-serif;margin:14px 0 6px}
+label:first-child{margin-top:0}
+input[type=text],textarea{width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 12px}
+textarea{resize:vertical;min-height:96px}
+#material{min-height:170px}
+input:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.hint{font-size:.82rem;color:var(--muted);margin:6px 0 0;line-height:1.4}
+.file{margin-top:8px;font-size:.85rem}
+.row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+button{font:700 .95rem "Bricolage Grotesque",system-ui,sans-serif;border-radius:6px;padding:11px 18px;cursor:pointer;border:1px solid var(--btn)}
+.go{background:var(--btn);color:var(--btn-ink);flex:1}
+.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button:disabled{opacity:.5;cursor:not-allowed}
+#status{margin:14px 0 0;font-size:.9rem;color:var(--muted);min-height:1.4em}
+#status.err{color:var(--err)}
+.tools{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.tools .ghost{padding:8px 14px}
+.empty{border:2px dashed var(--line);border-radius:10px;padding:36px 24px;color:var(--muted);text-align:center}
+.topic{margin-bottom:20px}
+.topic>h2{font:700 1.5rem/1.2 "Bricolage Grotesque",system-ui,sans-serif;margin:0 0 4px;letter-spacing:-.01em}
+.topic .state{font-size:.82rem;color:var(--muted);margin-bottom:10px}
+.body h2,.body h3{font:700 1.15rem/1.3 "Bricolage Grotesque",system-ui,sans-serif;margin:1.6em 0 .4em}
+.body h4{font:500 1rem "Bricolage Grotesque",system-ui,sans-serif;margin:1.2em 0 .3em}
+.body p,.body li{max-width:72ch}
+.body ul,.body ol{padding-left:1.3em}
+.body li{margin:.25em 0}
+.body code{font-size:.88em;background:var(--bg);padding:.1em .35em;border-radius:4px}
+.tw{overflow-x:auto;margin:1em 0}
+.body table{border-collapse:collapse;font-size:.92rem;min-width:100%}
+.body th,.body td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.body th{background:var(--bg);font-family:"Bricolage Grotesque",system-ui,sans-serif}
+.top3{background:var(--hl-bg);border-left:6px solid var(--hl);border-radius:6px;padding:4px 18px 10px;margin:1.6em 0 .4em;color:var(--hl-ink)}
+.top3 h2,.top3 h3{margin-top:.8em}
+.ph{color:var(--muted);font-style:italic}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Crash <span>Notes</span></h1>
+  <p class="lede">Exam tomorrow and starting from zero? Add your subject, topics and study material. You get beginner-friendly notes for each topic, with the three most likely exam points highlighted.</p>
+
+  <div class="grid">
+    <section class="setup" aria-label="Setup">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" placeholder="e.g. Control Systems" autocomplete="off">
+
+      <label for="topics">Topics (one per line)</label>
+      <textarea id="topics" placeholder="Unit 1: Transfer functions&#10;Unit 2: Stability&#10;Unit 3: Root locus"></textarea>
+
+      <label for="material">Study material</label>
+      <textarea id="material" placeholder="Paste your lecture notes, slides text or textbook extracts here."></textarea>
+      <input class="file" type="file" id="file" accept=".txt,.md,.csv" multiple>
+      <p class="hint">You can load .txt or .md files. For a PDF or slides, copy the text and paste it above. Without material, notes use standard textbook knowledge.</p>
+
+      <label for="code">Access code</label>
+      <input type="text" id="code" placeholder="Ask the site owner" autocomplete="off">
+
+      <div class="row">
+        <button class="go" id="go">Make my notes</button>
+        <button class="ghost" id="stop" disabled>Stop</button>
+      </div>
+      <p id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section aria-label="Notes">
+      <div class="tools" id="tools" hidden>
+        <button class="ghost" id="copy">Copy all notes</button>
+        <button class="ghost" id="dl">Save as .md</button>
+      </div>
+      <div id="out"><div class="empty">Your notes will appear here, one card per topic.</div></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const KEY = 'crashnotes:v1';
+const MAX_MATERIAL = 120000;
+let notes = [];
+let ctl = null;
+
+try {
+  const d = JSON.parse(localStorage.getItem(KEY) || '{}');
+  if (d.subject) $('#subject').value = d.subject;
+  if (d.topics) $('#topics').value = d.topics;
+  if (d.material) $('#material').value = d.material;
+  if (d.code) $('#code').value = d.code;
+} catch (e) {}
+
+function persist() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify({
+      subject: $('#subject').value, topics: $('#topics').value, material: $('#material').value, code: $('#code').value
+    }));
+  } catch (e) {}
+}
+['#subject', '#topics', '#material', '#code'].forEach(s => $(s).addEventListener('input', persist));
+
+function status(msg, isErr) {
+  const el = $('#status');
+  el.textContent = msg;
+  el.className = isErr ? 'err' : '';
+}
+
+$('#file').addEventListener('change', async e => {
+  let added = '';
+  for (const f of e.target.files) {
+    try { added += `\n\n--- ${f.name} ---\n` + await f.text(); } catch (err) {}
+  }
+  if (added) { $('#material').value = ($('#material').value + added).trim(); persist(); status('Loaded file text into study material.'); }
+  e.target.value = '';
+});
+
+function parseTopics(raw) {
+  let list = raw.split('\n').map(t => t.trim()).filter(Boolean);
+  if (list.length === 1 && list[0].includes(',')) list = list[0].split(',').map(t => t.trim()).filter(Boolean);
+  return list.slice(0, 12);
+}
+
+function buildPrompt(subject, topic, material) {
+  const subj = subject || 'this subject';
+  return `You are my exam prep assistant. I have an exam tomorrow and I am starting from zero. Assume I know nothing about ${subj}.
+
+Write notes for ONE topic: "${topic}".
+Use the study material below as your main source. Where the material doesn't cover something important for this topic, fill the gap with standard knowledge and mark it "(general knowledge)".
+
+Rules:
+- Explain in simple, plain language, like you're teaching a complete beginner.
+- Cover every important concept: definitions, core principles, relevant judgments or case laws, laws, formulas and theorems (wherever this subject has them), and key distinctions.
+- Use bullet points for concepts, tables for comparisons, Q&A format (**Q:** ... then **A:** ...) for definitions and distinctions, and real-life examples wherever something needs illustration.
+- Don't skip anything important, but don't over-explain. Keep it just enough that I can understand, remember, and write a good exam answer.
+- End with a section headed exactly "## Top 3 exam points": a numbered list of the 3 most likely exam points for this topic, each with a one-line reason.
+- Start straight away with "## " section headings. No preamble, and don't repeat the topic as a title.
+- Output Markdown only.
+
+STUDY MATERIAL:
+${material || '(none provided)'}`;
+}
+
+function renderInto(el, md) {
+  el.innerHTML = DOMPurify.sanitize(marked.parse(md));
+  el.querySelectorAll('table').forEach(t => {
+    const w = document.createElement('div'); w.className = 'tw';
+    t.before(w); w.append(t);
+  });
+  el.querySelectorAll('h2,h3').forEach(h => {
+    if (!/top\s*3/i.test(h.textContent) || h.parentElement.classList.contains('top3')) return;
+    const box = document.createElement('div'); box.className = 'top3';
+    h.before(box); box.append(h);
+    let n = box.nextElementSibling;
+    while (n && !/^H[1-3]$/.test(n.tagName)) { const nx = n.nextElementSibling; box.append(n); n = nx; }
+  });
+}
+
+function addCard(topic) {
+  const art = document.createElement('article');
+  art.className = 'topic';
+  const h = document.createElement('h2'); h.textContent = topic;
+  const st = document.createElement('div'); st.className = 'state'; st.textContent = 'Waiting';
+  const body = document.createElement('div'); body.className = 'body';
+  art.append(h, st, body);
+  $('#out').append(art);
+  return { st, body };
+}
+
+async function generate(prompt, onText) {
+  const r = await fetch('/api/notes', {
+    method: 'POST', signal: ctl.signal,
+    headers: { 'content-type': 'application/json', 'x-access-code': $('#code').value.trim() },
+    body: JSON.stringify({ prompt })
+  });
+  if (!r.ok) {
+    const err = new Error('Server error ' + r.status);
+    err.code = r.status === 401 ? 'unauthorized' : r.status === 429 ? 'rate_limited' : 'server';
+    throw err;
+  }
+  const reader = r.body.getReader(), dec = new TextDecoder();
+  let text = '';
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    text += dec.decode(value, { stream: true });
+    onText(text);
+  }
+  return text;
+}
+
+async function run() {
+  const subject = $('#subject').value.trim();
+  const topics = parseTopics($('#topics').value);
+  let material = $('#material').value.trim();
+  if (!topics.length) { status('Add at least one topic, one per line.', true); return; }
+  let truncNote = '';
+  if (material.length > MAX_MATERIAL) { material = material.slice(0, MAX_MATERIAL); truncNote = ' Material was cut to the first 120,000 characters.'; }
+
+  $('#out').innerHTML = '';
+  notes = [];
+  $('#tools').hidden = true;
+  $('#go').disabled = true; $('#stop').disabled = false;
+  ctl = new AbortController();
+  const cards = topics.map(addCard);
+  let stopped = false;
+
+  for (let i = 0; i < topics.length; i++) {
+    const { st, body } = cards[i];
+    status(`Writing ${i + 1} of ${topics.length}: ${topics[i]}.${truncNote}`);
+    st.textContent = 'Writing…';
+    const ph = document.createElement('p'); ph.className = 'ph'; ph.textContent = 'Reading your material…'; body.append(ph);
+    let raf = 0;
+    try {
+      const text = await generate(buildPrompt(subject, topics[i], material), t => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => renderInto(body, t));
+      });
+      cancelAnimationFrame(raf);
+      renderInto(body, text);
+      notes.push({ topic: topics[i], md: text });
+      st.textContent = 'Done';
+      $('#tools').hidden = false;
+    } catch (e) {
+      cancelAnimationFrame(raf);
+      if (e && e.code === 'aborted' || ctl.signal.aborted) { st.textContent = 'Stopped'; stopped = true; break; }
+      body.textContent = '';
+      st.textContent = 'Failed';
+      st.style.color = 'var(--err)';
+      if (e && e.code === 'unauthorized') { status('Wrong or missing access code.', true); break; }
+      if (e && e.code === 'rate_limited') { status('Rate limit reached. Wait a minute, then run the remaining topics again.', true); break; }
+      status('One topic failed: ' + ((e && e.message) || 'unknown error') + '. Continuing with the rest.', true);
+    }
+  }
+  $('#go').disabled = false; $('#stop').disabled = true;
+  if (!$('#status').classList.contains('err')) status(stopped ? 'Stopped. Finished topics are kept below.' : `Done. ${notes.length} of ${topics.length} topics ready.`);
+}
+
+function allMd() {
+  const subj = $('#subject').value.trim();
+  return (subj ? `# ${subj}: exam notes\n\n` : '# Exam notes\n\n') + notes.map(n => `# ${n.topic}\n\n${n.md}`).join('\n\n---\n\n');
+}
+
+$('#go').addEventListener('click', run);
+$('#stop').addEventListener('click', () => { if (ctl) ctl.abort(); });
+$('#copy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(allMd()); status('Copied all notes.'); }
+  catch (e) { status('Copy was blocked here. Use Save as .md instead.', true); }
+});
+$('#dl').addEventListener('click', () => {
+  const url = URL.createObjectURL(new Blob([allMd()], { type: 'text/markdown' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = 'exam-notes.md';
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  status('Saved exam-notes.md.');
+});
+</script>
+</body>
+</html>
